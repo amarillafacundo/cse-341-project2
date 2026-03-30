@@ -79,6 +79,13 @@ const update = async (req, res) => {
 
     const updatedWorkout = req.body;
 
+      const { name, difficulty, duration } = updatedWorkout;
+
+    if (!name || !difficulty || !duration) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+    
+
     const result = await db
       .collection("workouts")
       .replaceOne({ _id: id }, updatedWorkout);

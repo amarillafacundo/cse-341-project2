@@ -80,6 +80,15 @@ const update = async (req, res) => {
     const db = getDb();
     const id = new ObjectId(req.params.id);
 
+    const updatedHabit = req.body;
+
+    
+    const { title, category, frequency } = updatedHabit;
+
+    if (!title || !category || !frequency) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const result = await db
       .collection("habits")
       .replaceOne({ _id: id }, req.body);
