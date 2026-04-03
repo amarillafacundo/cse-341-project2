@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/habits");
-
+const isAuthenticated = require("../middleware/authenticate");
 /**
  * @swagger
  * /habits:
@@ -73,7 +73,7 @@ router.get("/:id", controller.getSingle);
  *       400:
  *         description: Invalid input
  */
-router.post("/", controller.create);
+router.post("/", isAuthenticated, controller.create);
 
 /**
  * @swagger
@@ -112,7 +112,7 @@ router.post("/", controller.create);
  *       204:
  *         description: Updated
  */
-router.put("/:id", controller.update);
+router.put("/:id", isAuthenticated, controller.update);
 
 /**
  * @swagger
@@ -130,7 +130,7 @@ router.put("/:id", controller.update);
  *       200:
  *         description: Deleted successfully
  */
-router.delete("/:id", controller.remove);
+router.delete("/:id", isAuthenticated, controller.remove);
 
 module.exports = router;
 

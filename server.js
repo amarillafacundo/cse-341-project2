@@ -1,6 +1,10 @@
 const express = require("express");
 const { initDb } = require("./db/connect");
 require("dotenv").config();
+const session = require("express-session");
+const cors = require("cors");
+ 
+
 
 const workoutsRoutes = require("./routes/workouts");
 const habitsRoutes = require("./routes/habits");
@@ -11,12 +15,22 @@ const swaggerSpec = require("./swagger");
 const app = express();
 app.use(express.json());
 
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  session({
+    secret: "supersecretkey",
+    resave: false,
+    saveUninitialized: true
+  })
+);
+
 
 
 // routes
 app.use("/workouts", workoutsRoutes);
 app.use("/habits", habitsRoutes);
+app.use("/auth", require("./routes/auth"));
 
 const port = process.env.PORT || 3000;
 

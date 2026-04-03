@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/workouts");
-
+const isAuthenticated = require("../middleware/authenticate");
 
 
 /**
@@ -78,7 +78,7 @@ router.get("/:id", controller.getSingle);
  *         description: Invalid input
  */
 
-router.post("/", controller.create);
+router.post("/", isAuthenticated, controller.create);
 
 /**
  * @swagger
@@ -120,7 +120,7 @@ router.post("/", controller.create);
  *         description: Updated
  */
 
-router.put("/:id", controller.update);
+router.put("/:id", isAuthenticated, controller.update);
 
 /**
  * @swagger
@@ -139,7 +139,7 @@ router.put("/:id", controller.update);
  *         description: Deleted successfully
  */
 
-router.delete("/:id", controller.remove);
+router.delete("/:id", isAuthenticated, controller.remove);
 
 
 module.exports = router;
