@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth");
+const passport = require("passport");
+const { route } = require("./workouts");
 
 /**
  * @swagger
@@ -70,6 +72,11 @@ router.post("/login", authController.login);
  *         description: Logged out
  */
 router.get("/logout", authController.logout);
+
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/", successRedirect: "/api-docs" }));
+
 
 
 module.exports = router;

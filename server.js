@@ -11,6 +11,9 @@ const habitsRoutes = require("./routes/habits");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
+const passport = require("passport");
+require("./config/passport");
+
 
 const app = express();
 app.use(express.json());
@@ -24,6 +27,9 @@ app.use(
     saveUninitialized: true
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
